@@ -54,7 +54,7 @@ class countryList{
 
   void listNodes();
 
-  char* printNode(int nodeNum);
+  void printNode(char* targetNodeName);
   
   void initialize(char* newName, char* newArea, char*newPop, char* newMigR, char*newPopGrowth, char*newUrbanPerc);
 

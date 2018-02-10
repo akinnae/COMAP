@@ -12,6 +12,6 @@
 #include "countryList.h"
 #include "countryClass.h"
 
-void initialize(countryList countries);
+void initialize(countryList& countries);
 
 #endif

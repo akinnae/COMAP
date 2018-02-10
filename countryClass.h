@@ -20,11 +20,16 @@ class country{
 
   //List of functions which are more clearly explained in the cpp file. Mostly straightforward, though.
   void initializeCountry(long int newPopulation,long int newArea, double newMigrationR, double newGrowthR, double newUrbanPercent);
+
   char* getName();
+
   void setName(char* newName);
+
   void pushOnNeighbors();
+
   void age(int years);
 
+  void printInfo();
 };
 
 #endif

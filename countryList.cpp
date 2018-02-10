@@ -76,20 +76,40 @@ void countryList::listNodes()
 }
 
 
-//Prints the nth node in the list (maybe make it print info as well?)
-char* countryList::printNode(int nodeNum)
+//Prints the node by the given name (maybe make it print info as well?)
+void countryList::printNode(char* targetNodeName)
 {
   nodeptr p = start;
   int curNode = 0;
   //Searches until the end or a matching node number
-  while (p != NULL && curNode < nodeNum)
+  while (p != NULL)
     {
+      //Search algorithm compares character by character
+      //Defaults to "found"
+      int isFound = 1;
+      for(int i = 0; i< 50; i++){
+	isFound = 1;
+	//If the name ends before we find a discrepancy, use it
+	if(p->curCountry.getName()[i] == '\0' || targetNodeName[i] == '\0')
+	  break;
+	//If we find a discrepancy, we don't have the right name
+	isFound = 0;
+	if(p->curCountry.getName()[i] != targetNodeName[i])
+	  {
+	    break;
+	  }
+      }
+      //If we had the right name, print the info
+      if(isFound == 1){
+	p->curCountry.printInfo();
+	break;
+      }
+      //Otherwise, keep searching
       p = p->next;
     }
+  //No dice: print failure
   if (p == NULL)
-    return "NULL";
-  else
-    return p->curCountry.getName();
+    cout << "No Results" << endl;
 }
 
 //This is the infamous initialization function. Information comes via character arrays sent from initialization.cpp. Here they are converted into int's or doubles, accounting for blanks, then passed on to the respective country

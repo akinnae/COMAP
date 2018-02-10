@@ -32,10 +32,22 @@ void country::initializeCountry(long int newPopulation, long int newArea, double
   growthR = newGrowthR;
   urbanPercent = newUrbanPercent;
 
-  cout << name << endl;
-  cout << population << endl;
-  cout << area << endl;
-  cout << migrationR << endl;
-  cout << growthR << endl;
-  cout << urbanPercent << endl;
+  //cout << name << endl;
+  //cout << population << endl;
+  //cout << area << endl;
+  //cout << migrationR << endl;
+  //cout << growthR << endl;
+  //cout << urbanPercent << endl;
+}
+
+void country::printInfo()
+{
+
+  cout << "Name: " << name << endl;
+  cout << "Population: " << population << endl;
+  cout << "Area: " << area << endl;
+  cout << "Migration Rate: " << migrationR << endl;
+  cout << "Growth Rate: " << growthR << endl;
+  cout << "Percentage urban: " << urbanPercent << endl;
+
 }
