@@ -96,12 +96,33 @@ void countryList::initialize(char* newName, char* newArea, char* newPop, char* n
   while(p != NULL)
     {
       if(p->curCountry.getName() == newName){
-	long int newPopInt = stol(newPop);
-	long int newAreaInt = stol(newArea);
-	double newMigRDoub = atof(newMigR);
-	double newPopDoub = atof(newPopGrowth);
-	double newUrbanPercDoub = atof(newUrbanPerc);
-	
+	long int newPopInt;
+	long int newAreaInt;
+	double newMigRDoub;
+	double newPopDoub;
+	double newUrbanPercDoub;
+
+	if(newPop[0])
+	  newPopInt = stol(newPop);
+	else
+	  newPopInt = 0;
+	if(newArea[0])
+	  newAreaInt = stol(newArea);
+	else
+	  newAreaInt = 0;
+	if(newMigR[0])
+	  newMigRDoub = atof(newMigR);
+	else
+	  newMigRDoub = 0;
+	if(newPop[0])
+	  newPopDoub = atof(newPopGrowth);
+	else
+	  newPopDoub = 0;
+	if(newUrbanPerc[0])
+	  newUrbanPercDoub = atof(newUrbanPerc);
+	else
+	  newUrbanPercDoub = 0;
+
 	p->curCountry.initializeCountry(newPopInt,newAreaInt, newMigRDoub, newPopDoub, newUrbanPercDoub);
 	break;
       }
