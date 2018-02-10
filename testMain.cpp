@@ -22,7 +22,7 @@ int main(){
   while(choice != 3){
     //Clears the inputs after messing around with getline
     cin.sync();
-    cout << "1\tlist all countries\n2\tdetails on a particular country\n3\tquit:" << endl;
+    cout << "1\tlist all countries\n2\tdetails on a particular country\n3\tquit" << endl;
     cin >> choice;
     if(choice == 1)
       //Then we list those nodes
@@ -34,6 +34,6 @@ int main(){
       testList.printNode(chosenCountry);
       delete[] chosenCountry;
     }
-    cout << "\n\n\n\n\n\n\n\n" << endl;
+    cout << "\n\n\n";
   }
 }
