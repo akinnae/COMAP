@@ -9,18 +9,22 @@
 
 using namespace std;
 
+//The class described above
 class countryList{
 
  private:
 
+  //Here the structure for the actual linked list is defined. Contains one country and a pointer to the successive country.
   struct node
   {
     country curCountry;
     node * next;
   };
 
+  //Defined for convenience
   typedef node* nodeptr;
   
+  //Not sure what this does; initializes to null
   nodeptr start;
   
  public:
@@ -32,7 +36,7 @@ class countryList{
 
   ~countryList()
     {
-      //Is this formatting right?
+      //Defines two nodes, one to move forward and one to stay behind and be deleted for the destructor
       nodeptr p = start, n;
 
       while (p != NULL)
@@ -43,7 +47,7 @@ class countryList{
 	}
     }
 
-  //should the star be here for char array? Dunno.
+  //List of fairly trivial functions, excepting (perhaps) initialize.
   void addNode(char* name);
 
   void deleteNode(char* name);

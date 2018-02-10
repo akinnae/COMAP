@@ -6,6 +6,7 @@
 
 using namespace std;
 
+//defines the country class. Here is where the independent variables for countries are stored. This may eventually become an array of variables (or one for double and one for ints)
 class country{
 
   char* name;
@@ -17,6 +18,7 @@ class country{
 
  public:
 
+  //List of functions which are more clearly explained in the cpp file. Mostly straightforward, though.
   void initializeCountry(long int newPopulation,long int newArea, double newMigrationR, double newGrowthR, double newUrbanPercent);
   char* getName();
   void setName(char* newName);

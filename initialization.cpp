@@ -26,7 +26,7 @@ void initialize(countryList countries){
       int counter = 0;
       int inQuotes = -1;
       for(int i=0; i<200; i++){
-	if(nextLine[0] == '"')
+	if(nextLine[i] == '"')
 	  inQuotes = inQuotes*-1;
 	if(nextLine[i] == ',' || nextLine[i] == '\0'){
 	  if(inQuotes == -1){

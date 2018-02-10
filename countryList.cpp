@@ -7,6 +7,8 @@ using namespace std;
 #include "countryClass.h"
 #include "countryList.h"
 
+
+//Function for adding nodes. Takes a name for the new country
 void countryList::addNode(char* newName)
 {
   nodeptr n, curr, prev;
@@ -14,12 +16,13 @@ void countryList::addNode(char* newName)
   n = new node;
   n->curCountry.setName(newName);
   
-  //Seems to assume the list may not be ordered? Clean this up later
+  //To begin, if there is no defined start, set the start to itself
   if(start == NULL)
     {
       start = n;
       n->next = NULL;
     }
+  //otherwise, we define "curr" at the start, and use it with "prev" to find the end of the list
   else
     {
       curr = start;
@@ -28,31 +31,27 @@ void countryList::addNode(char* newName)
 	  prev = curr;
 	  curr = curr->next;
 	}
-      if(curr == start)
-	{
-	  n->next = start;
-	  start = n;
-	}
-      else
-	{
-	  prev->next = n;
-	  n->next = curr;
-	}
+      //Now we should be at the end of the list.
+      //Thus we assign the previous pointer to our new node, and our new node to null
+      prev->next = n;
+      n->next = curr;
     }
 }
 
+//This function is for node deletion
 void countryList::deleteNode(char* name)
 {
   nodeptr prev, curr;
   
   curr = start;
   
+  //Searches for either the node with a matching name or the end of the list
   while(curr != NULL && name != curr->curCountry.getName())
     {
       prev = curr;
       curr = curr->next;
     }
-
+  //If we find the name, re-adjust the previous pointer, then delete the name.
   if(name == curr->curCountry.getName())
     {
       if(curr == start)
@@ -64,6 +63,7 @@ void countryList::deleteNode(char* name)
     }
 }
 
+//Lists all of the nodes in the list by name
 void countryList::listNodes()
 {
   nodeptr p = start;
@@ -75,10 +75,13 @@ void countryList::listNodes()
     }
 }
 
+
+//Prints the nth node in the list (maybe make it print info as well?)
 char* countryList::printNode(int nodeNum)
 {
   nodeptr p = start;
   int curNode = 0;
+  //Searches until the end or a matching node number
   while (p != NULL && curNode < nodeNum)
     {
       p = p->next;
@@ -89,19 +92,24 @@ char* countryList::printNode(int nodeNum)
     return p->curCountry.getName();
 }
 
+//This is the infamous initialization function. Information comes via character arrays sent from initialization.cpp. Here they are converted into int's or doubles, accounting for blanks, then passed on to the respective country
+//Note: this passes data into countries which have already been created by name.
 void countryList::initialize(char* newName, char* newArea, char* newPop, char* newMigR, char* newPopGrowth, char* newUrbanPerc)
 {
   nodeptr p = start;
 
+  //First searches for the country by name.
   while(p != NULL)
     {
       if(p->curCountry.getName() == newName){
+	//These are the variables we will be passing along
 	long int newPopInt;
 	long int newAreaInt;
 	double newMigRDoub;
 	double newPopDoub;
 	double newUrbanPercDoub;
 
+	//If the variables aren't empty, we convert to long or double. Otherwise set the new long/double to 0 (Is this the best way to do it?)
 	if(newPop[0])
 	  newPopInt = stol(newPop);
 	else
@@ -123,9 +131,12 @@ void countryList::initialize(char* newName, char* newArea, char* newPop, char* n
 	else
 	  newUrbanPercDoub = 0;
 
+	//Calls the initcountry function to fill in the country with our new variables
 	p->curCountry.initializeCountry(newPopInt,newAreaInt, newMigRDoub, newPopDoub, newUrbanPercDoub);
+	//Breaks the function if we found our country
 	break;
       }
+      //Continues the search if we didn't find our country.
       p = p-> next;
     }
 }
