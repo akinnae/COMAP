@@ -58,6 +58,8 @@ class countryList{
   
   void initialize(char* newName, char* newArea, char*newPop, char* newMigR, char*newPopGrowth, char*newUrbanPerc);
 
+  void initializeFromFile();
+
 };
 
 #endif

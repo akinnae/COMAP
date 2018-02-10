@@ -5,6 +5,7 @@
  * Similarly, countries will have functions to describe their independent changes over time, such as population growth. Most of this information will be stored here
  */
 #include <iostream>
+#include <fstream>
 #include "countryClass.h"
 
 using namespace std;

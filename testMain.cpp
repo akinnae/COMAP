@@ -4,7 +4,6 @@
 #include <iostream>
 #include <fstream>
 
-#include "initialization.h"
 #include "countryList.h"
 #include "countryClass.h"
 
@@ -17,11 +16,12 @@ int main(){
   //Here we declare a new list of countries
   countryList testList;
   //Then we initialize it to our data set
-  initialize(testList);
+  testList.initializeFromFile();
 
   int choice = 0;
   while(choice != 3){
-    choice = 3;;
+    //Clears the inputs after messing around with getline
+    cin.sync();
     cout << "Press 1 to see a list of all countries\n2 for details on a particular country\nOr 3 to quit:" << endl;
     cin >> choice;
     if(choice == 1)
