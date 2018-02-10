@@ -22,7 +22,7 @@ int main(){
   while(choice != 3){
     //Clears the inputs after messing around with getline
     cin.sync();
-    cout << "Press 1 to see a list of all countries\n2 for details on a particular country\nOr 3 to quit:" << endl;
+    cout << "1\tlist all countries\n2\tdetails on a particular country\n3\tquit:" << endl;
     cin >> choice;
     if(choice == 1)
       //Then we list those nodes
