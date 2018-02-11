@@ -88,23 +88,25 @@ void countryList::printNode(char* targetNodeName)
       //Search algorithm compares character by character
       //Defaults to "found"
       int isFound = 1;
-      for(int i = 0; i< 50; i++){
-	isFound = 1;
-	//If the name ends before we find a discrepancy, use it
-	if(p->curCountry.getName()[i] == '\0' || targetNodeName[i] == '\0')
-	  break;
-	//If we find a discrepancy, we don't have the right name
-	isFound = 0;
-	if(p->curCountry.getName()[i] != targetNodeName[i])
-	  {
+      for(int i = 0; i< 50; i++)
+	{
+	  isFound = 1;
+	  //If the name ends before we find a discrepancy, use it
+	  if(p->curCountry.getName()[i] == '\0' || targetNodeName[i] == '\0')
 	    break;
-	  }
-      }
+	  //If we find a discrepancy, we don't have the right name
+	  isFound = 0;
+	  if(p->curCountry.getName()[i] != targetNodeName[i])
+	    {
+	      break;
+	    }
+	}
       //If we had the right name, print the info
-      if(isFound == 1){
-	p->curCountry.printInfo();
-	break;
-      }
+      if(isFound == 1)
+	{
+	  p->curCountry.printInfo();
+	  break;
+	}
       //Otherwise, keep searching
       p = p->next;
     }
@@ -122,41 +124,42 @@ void countryList::initialize(char* newName, char* newArea, char* newPop, char* n
   //First searches for the country by name.
   while(p != NULL)
     {
-      if(p->curCountry.getName() == newName){
-	//These are the variables we will be passing along
-	long int newPopInt;
-	long int newAreaInt;
-	double newMigRDoub;
-	double newPopDoub;
-	double newUrbanPercDoub;
-
-	//If the variables aren't empty, we convert to long or double. Otherwise set the new long/double to 0 (Is this the best way to do it?)
-	if(newPop[0])
-	  newPopInt = stol(newPop);
-	else
-	  newPopInt = 0;
-	if(newArea[0])
+      if(p->curCountry.getName() == newName)
+	{
+	  //These are the variables we will be passing along
+	  long int newPopInt;
+	  long int newAreaInt;
+	  double newMigRDoub;
+	  double newPopDoub;
+	  double newUrbanPercDoub;
+	  
+	  //If the variables aren't empty, we convert to long or double. Otherwise set the new long/double to 0 (Is this the best way to do it?)
+	  if(newPop[0])
+	    newPopInt = stol(newPop);
+	  else
+	    newPopInt = 0;
+	  if(newArea[0])
 	  newAreaInt = stol(newArea);
-	else
-	  newAreaInt = 0;
-	if(newMigR[0])
-	  newMigRDoub = atof(newMigR);
-	else
-	  newMigRDoub = 0;
-	if(newPop[0])
-	  newPopDoub = atof(newPopGrowth);
-	else
-	  newPopDoub = 0;
-	if(newUrbanPerc[0])
-	  newUrbanPercDoub = atof(newUrbanPerc);
-	else
-	  newUrbanPercDoub = 0;
-
+	  else
+	    newAreaInt = 0;
+	  if(newMigR[0])
+	    newMigRDoub = atof(newMigR);
+	  else
+	    newMigRDoub = 0;
+	  if(newPop[0])
+	    newPopDoub = atof(newPopGrowth);
+	  else
+	    newPopDoub = 0;
+	  if(newUrbanPerc[0])
+	    newUrbanPercDoub = atof(newUrbanPerc);
+	  else
+	    newUrbanPercDoub = 0;
+	  
 	//Calls the initcountry function to fill in the country with our new variables
-	p->curCountry.initializeCountry(newPopInt,newAreaInt, newMigRDoub, newPopDoub, newUrbanPercDoub);
-	//Breaks the function if we found our country
-	break;
-      }
+	  p->curCountry.initializeCountry(newPopInt,newAreaInt, newMigRDoub, newPopDoub, newUrbanPercDoub);
+	  //Breaks the function if we found our country
+	  break;
+	}
       //Continues the search if we didn't find our country.
       p = p-> next;
     }
@@ -174,9 +177,10 @@ void countryList::initializeFromFile(){
     {
       //Will hold the variables in a 6x50 char array                            
       char** countryVars = new char*[6];
-      for (int i = 0; i < 6; i++){
-        countryVars[i]= new char[50];
-      }
+      for (int i = 0; i < 6; i++)
+	{
+	  countryVars[i]= new char[50];
+	}
       //Holds the next line of text                        
       char* nextLine = new char[500];
       data.getline(nextLine, 500);
@@ -188,42 +192,45 @@ void countryList::initializeFromFile(){
       int inQuotes = -1;
       //Now we're scanning the line for commas while making sure we're
       //not in a quotation nor at the end
-      for(int i=0; i<200; i++){
-	if(nextLine[i] == '"')
-	  inQuotes = inQuotes*-1;
-	if(nextLine[i] == ',' || nextLine[i] == '\0'){
-	  if(inQuotes == -1){
-	    //If we're not in quotes, grab the segment for our next variable                                                                                                         
-	    for(int j = 0; j < i-scanPlace; j++)
-	      {
-		countryVars[counter][j]= nextLine[scanPlace+j];
-	      }
-	    //Terminate our string with the appropriate symbol                                                                                                                       
-	    countryVars[counter][i-scanPlace] = '\0';
-	    //advance our variable counter and scan counter
-	    counter++;
-	    scanPlace = i+1;
-	  }
+      for(int i=0; i<200; i++)
+	{
+	  if(nextLine[i] == '"')
+	    inQuotes = inQuotes*-1;
+	  if(nextLine[i] == ',' || nextLine[i] == '\0')
+	    {
+	      if(inQuotes == -1)
+		{
+		  //If we're not in quotes, grab the segment for our next variable                                                                                                         
+		  for(int j = 0; j < i-scanPlace; j++)
+		    {
+		      countryVars[counter][j]= nextLine[scanPlace+j];
+		    }
+		  //Terminate our string with the appropriate symbol                                                                                                                       
+		  countryVars[counter][i-scanPlace] = '\0';
+		  //advance our variable counter and scan counter
+		  counter++;
+		  scanPlace = i+1;
+		}
+	    }
+	  //Terminates if we're at the end of the line                                                       
+	  if(nextLine[i] == '\0')
+	    break;
 	}
-	//Terminates if we're at the end of the line                                                       
-	if(nextLine[i] == '\0')
-	  break;
-      }
       //Finally, adds a node by the name of the set of variables
       addNode(countryVars[0]);
-
+      
       initialize(countryVars[0], countryVars[1],countryVars[2], countryVars[3], countryVars[4], countryVars[5]);
       
       //Then frees up those variable pointers for the next set of variables
-        delete[] countryVars;
-        delete[] nextLine;
+      delete[] countryVars;
+      delete[] nextLine;
     }
   data.close();
 }
 
 
 void countryList::ageNodes(int years){
-
+  
   nodeptr p = start;
   
   while(p != NULL)
@@ -238,28 +245,49 @@ void countryList::initializeLanguages(){
   ifstream langData;
   
   langData.open("languages.csv");
-  if(langData)
-    cout << "File opened" << endl;
-  else
-    {
-      cout << "THis boy broke" << endl;
-      return;
-    }
+  //  if(langData)
+    //    cout << "File opened" << endl;
+  // else
+  // {
+      //     cout << "THis boy broke" << endl;
+  //   return;
+      // }
   //Will hold the language names in a char array                            
   languageNames = new char*[300];
-  for(int i = 0; i < 300; i++){
-    languageNames[i] = new char[50];
-  }
+  for(int i = 0; i < 300; i++)
+    {
+      languageNames[i] = new char[50];
+    }
   int languageCount = 0;
   //While we have more data in the file, grab data line-by-line                 
   while(!langData.eof())
     {
-      cout << "Reading line" << endl;
+      //      cout << "Reading line" << endl;
       //Holds the next line of text                        
       char* nextLine = new char[500];
       char* nextLang;
-      langData.getline(nextLine, 500);
-      cout << nextLine << endl;
+      char* nextCountry;
+      if(!langData.getline(nextLine, 500))
+	{
+	  int failed = 1;
+	  cout << "Failed to get line. Trying again." << endl;
+	  for(int i = 0; i < 10; i++)
+	  {
+	    if(!langData.getline(nextLine, 500))
+	      {
+		cout << "Failed again." << endl;
+	      }
+	    else
+	      {
+		failed = 0;
+		break;
+	      } 
+	  }	
+	if (failed == 1)
+	  break;
+      }
+
+      //cout << nextLine << endl;
       //These are used to segment the lines by commas    
       //"inquotes" counts quotations used around names containing commas    
       //That way those commans don't mess up our segmentation
@@ -270,74 +298,95 @@ void countryList::initializeLanguages(){
       int counter = 0;
       //Now we're scanning the line for commas while making sure we're
       //not in a quotation nor at the end
-      for(int i=0; i<200; i++){
-	//This will hold the next language name we find
-	nextLang = new char[50];
-	//Tracks quotations
-	if(nextLine[i] == '"')
-	  inQuotes = inQuotes*-1;
-	//If we find a comma or the end of the file
-	if(nextLine[i] == ',' || nextLine[i] == '\0'){
-	  //Check we're not in quotes, not in the name, and on a name column
-	  if(inQuotes == -1 && isName != 1 && (counter%2==1||counter==0)){
-	    cout << "Found language name" << endl;
-	    //grab the segment for our next variable                                                        
-	    for(int j = 0; j < i-scanPlace; j++)
-	      {
-		nextLang[j]= nextLine[scanPlace+j];
-	      }
-	    //default our language to a new one
-	    int isNew = 1;
-	    //compare our new language with every previous one in our master list
-	    for(int j = 0; j < languageCount; j++){
-	      for(int k = 0; k < i-scanPlace; k++){
-		//If there's a difference, stop skanning that language
-		if(nextLang[k] != languageNames[j][k])
-		  break;
-		//Otherwise if we hit the last letter they are equal and not new
-		else if(k == i-scanPlace-1)
-		  isNew = 0;
-		//Also if nextlang is empty then it's not new
-		if(!nextLang[0]){
-		  isNew = 0;
-		  break;
+      for(int i=0; i<200; i++)
+	{
+	  //This tracks the current country
+	  nextCountry = new char[50];
+	  //This will hold the next language name we find
+	  nextLang = new char[50];
+	  //Tracks quotations
+	  if(nextLine[i] == '"')
+	    inQuotes = inQuotes*-1;
+	  //If we find a comma or the end of the file
+	  if(nextLine[i] == ',' || nextLine[i] == '\0')
+	    {
+	      //Pulls the name for the current country
+	      if(inQuotes == -1 && counter == 0)
+		{
+		  for(int j = 0; j < i-scanPlace; j++)
+		    {
+		      nextCountry[j] = nextLine[scanPlace+j];
+		    }
+		  cout << "Current country: " << nextCountry << endl;
+		  counter++;
+		  scanPlace = i+1;
 		}
-	      }
-	      //If it's not new, break our search
-	      if(isNew == 0)
-		break;
-	      
+	      //Check we're not in quotes, not in the name, and on a name column
+	      else if(inQuotes == -1 && counter%2==1)
+		{
+		  // cout << "Found language name" << endl;
+		  //grab the segment for our next variable                                                        
+		  for(int j = 0; j < i-scanPlace; j++)
+		    {
+		      nextLang[j]= nextLine[scanPlace+j];
+		    }
+		  //default our language to a new one
+		  int isNew = 1;
+		  //compare our new language with every previous one in our master list
+		  for(int j = 0; j < languageCount; j++)
+		    {
+		      for(int k = 0; k < i-scanPlace; k++)
+			{
+			  //If there's a difference, stop skanning that language
+			  if(nextLang[k] != languageNames[j][k])
+			  break;
+			//Otherwise if we hit the last letter they are equal and not new
+			else if(k == i-scanPlace-1)
+			  {
+			  isNew = 0;
+			  }
+			}
+		    }
+		  //Also if nextlang is empty then it's not new
+		  if(!nextLang[0])
+		    {
+		      isNew = 0;
+		    }
+	      //If it stayed new, add it to the end of the language file
+		  if(isNew == 1)
+		  {
+		    for(int k = 0; k < i-scanPlace; k++)
+		      {
+			languageNames[languageCount][k] = nextLang[k];
+		      }
+		    //Up our language counter and output the new language
+		    languageCount++;
+		    //Terminate our string with the appropriate symbol                     
+		    languageNames[languageCount-1][i-scanPlace] = '\0';
+		    cout << languageNames[languageCount-1] << endl;
+		  }
+		//Add to our line place counter
+		counter++;
+		//advance our scan counter
+		scanPlace = i+1;
+		}
+	      else if(inQuotes == -1)
+		{
+		  scanPlace = i+1;
+		  counter++;
+		}
 	    }
-	    //If it stayed new, add it to the end of the language file
-	    if(isNew == 1){
-	      for(int k = 0; k < i-scanPlace; k++){
-		languageNames[languageCount][k] = nextLang[k];
-	      }
-	      //Up our language counter and output the new language
-	      languageCount++;
-	      cout << languageNames[languageCount] << endl;
-	    }
-	    //Add to our line place counter
-	    counter++;
-	    //Terminate our string with the appropriate symbol                                                                                                                       
-	    languageNames[languageCount-1][i-scanPlace] = '\0';
-	    //advance our scan counter
-	    scanPlace = i+1;
-	  }
-	  else if(inQuotes != -1){
-	    scanPlace = i+1;
-	    isName = 0;
-	  }
+	    //Terminates if we're at the end of the line                                                       
+	    if(nextLine[i] == '\0')
+	      break;
+	    
+	    delete[] nextLang;
 	}
-	//Terminates if we're at the end of the line                                                       
-	if(nextLine[i] == '\0')
-	  break;
-	delete[] nextLang;
+	//Then frees up those variable pointers for the next set of variables
+	delete[] nextLine;
+	delete[] nextCountry;
       }
-      //Adds the array of language names to our countries
-      
-      //Then frees up those variable pointers for the next set of variables
-        delete[] nextLine;
+  // cout << langData.rdstate() << endl;;
+      langData.close();
     }
-
-}
+  

@@ -18,7 +18,6 @@ int main(){
   countryList testList;
   //Then we initialize it to our data set
   testList.initializeFromFile();
-  cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   testList.initializeLanguages();
   int choice = 0;
   while(choice != 4){
