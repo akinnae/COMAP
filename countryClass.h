@@ -1,5 +1,4 @@
 //This file is the header for the class that will represent countries in our program
-//Beau Horenberger
 
 #ifndef __COUNTRYCLASS_H__
 #define __COUNTRYCLASS_H__
