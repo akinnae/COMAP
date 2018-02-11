@@ -16,23 +16,24 @@ void countryList::pushint(string ogname, int pushval, string lang){
   while (p!=NULL){
     name = p->curCountry.getName();
     if(ogname!=name)
-        p->pushres = (pushval * delta(ogname, name)); //pushres needs to be defined in country class
+        p->pushres = (pushval * delta(ogname, name, lang)); //pushres needs to be defined in country class
     p = p->next;
   }
 }
 
 //PUSH INIT FUNCTION: calculates init global pushval for a country
 void country::pushfrom(){
-  int pushvalinit, pushvalA, pushvalB, pushvalC;
+  int pushvalinit;
+  int pushval[];
   pushvalinit = .25*(migrationR + population + growthR);
-  pushvalA = pushvalinit + (.25*PlangA);
-  pushvalB = pushvalinit + (.25*PlangB);
-  pushvalC = pushvalinit + (.25*PlangC);  
-  void countryList::push(name, pushvalA, langA); //each of these is in relation to a particular language
-  void countryList::push(name, pushvalB, langB); //each of these is in relation to a particular language
-  void countryList::push(name, pushvalC, langC); //each of these is in relation to a particular language
+  for(int i=0; i<LANGarrSIZE; i++){
+	  if(langarr[i]!=0){
+		pushval[i]=pushvalinit + (.25*Plangarr[i]);
+		void countryList::push(name, pushval[i], langarr[i]);
+	  }
+  }
 }
-
+ 
 //ASSUMPTIONS
 //langA is the most freq. spoken lang. PlangA is the percent people who speak it
 //
