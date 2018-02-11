@@ -235,23 +235,31 @@ void countryList::ageNodes(int years){
 
 void countryList::initializeLanguages(){
  //First we open up our file                                                   
-  ifstream data;
+  ifstream langData;
   
-  data.open("languages.csv");
-  
+  langData.open("languages.csv");
+  if(langData)
+    cout << "File opened" << endl;
+  else
+    {
+      cout << "THis boy broke" << endl;
+      return;
+    }
   //Will hold the language names in a char array                            
   languageNames = new char*[300];
   for(int i = 0; i < 300; i++){
-    languageNames[i] = new char*[50];
+    languageNames[i] = new char[50];
   }
-  int LanguageCount = 0;
+  int languageCount = 0;
   //While we have more data in the file, grab data line-by-line                 
-  while(!data.eof())
+  while(!langData.eof())
     {
+      cout << "Reading line" << endl;
       //Holds the next line of text                        
       char* nextLine = new char[500];
-      char* nextLang = new char[60];
-      data.getline(nextLine, 500);
+      char* nextLang;
+      langData.getline(nextLine, 500);
+      cout << nextLine << endl;
       //These are used to segment the lines by commas    
       //"inquotes" counts quotations used around names containing commas    
       //That way those commans don't mess up our segmentation
@@ -263,19 +271,56 @@ void countryList::initializeLanguages(){
       //Now we're scanning the line for commas while making sure we're
       //not in a quotation nor at the end
       for(int i=0; i<200; i++){
+	//This will hold the next language name we find
+	nextLang = new char[50];
+	//Tracks quotations
 	if(nextLine[i] == '"')
 	  inQuotes = inQuotes*-1;
+	//If we find a comma or the end of the file
 	if(nextLine[i] == ',' || nextLine[i] == '\0'){
-	  if(inQuotes == -1 && isName!= 1 && counter%2=1){
-	    //If we're not in quotes, grab the segment for our next variable                                                                                                         
+	  //Check we're not in quotes, not in the name, and on a name column
+	  if(inQuotes == -1 && isName != 1 && (counter%2==1||counter==0)){
+	    cout << "Found language name" << endl;
+	    //grab the segment for our next variable                                                        
 	    for(int j = 0; j < i-scanPlace; j++)
 	      {
-		langNames[(counter/2)+1][j]= nextLine[scanPlace+j];
+		nextLang[j]= nextLine[scanPlace+j];
 	      }
-
+	    //default our language to a new one
+	    int isNew = 1;
+	    //compare our new language with every previous one in our master list
+	    for(int j = 0; j < languageCount; j++){
+	      for(int k = 0; k < i-scanPlace; k++){
+		//If there's a difference, stop skanning that language
+		if(nextLang[k] != languageNames[j][k])
+		  break;
+		//Otherwise if we hit the last letter they are equal and not new
+		else if(k == i-scanPlace-1)
+		  isNew = 0;
+		//Also if nextlang is empty then it's not new
+		if(!nextLang[0]){
+		  isNew = 0;
+		  break;
+		}
+	      }
+	      //If it's not new, break our search
+	      if(isNew == 0)
+		break;
+	      
+	    }
+	    //If it stayed new, add it to the end of the language file
+	    if(isNew == 1){
+	      for(int k = 0; k < i-scanPlace; k++){
+		languageNames[languageCount][k] = nextLang[k];
+	      }
+	      //Up our language counter and output the new language
+	      languageCount++;
+	      cout << languageNames[languageCount] << endl;
+	    }
+	    //Add to our line place counter
 	    counter++;
 	    //Terminate our string with the appropriate symbol                                                                                                                       
-	    languageNames[LanguageCount][i-scanPlace] = '\0';
+	    languageNames[languageCount-1][i-scanPlace] = '\0';
 	    //advance our scan counter
 	    scanPlace = i+1;
 	  }
@@ -287,6 +332,7 @@ void countryList::initializeLanguages(){
 	//Terminates if we're at the end of the line                                                       
 	if(nextLine[i] == '\0')
 	  break;
+	delete[] nextLang;
       }
       //Adds the array of language names to our countries
       

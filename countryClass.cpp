@@ -62,7 +62,7 @@ void country::age(int years){
 }
 
 
-void country::initializeLangauges(double* newSpokenLanguages)
+void country::initializeLanguages(double* newSpokenLanguages)
 {
   spokenLanguages = newSpokenLanguages;
 }
