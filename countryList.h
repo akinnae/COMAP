@@ -60,7 +60,7 @@ class countryList{
   
   void printNode(char* targetNodeName);
   
-  void initialize(char* newName, char* newArea, char*newPop, char* newMigR, char*newPopGrowth, char*newUrbanPerc);
+  void initialize(string newName, char* newArea, char*newPop, char* newMigR, char*newPopGrowth, char*newUrbanPerc);
 
   void initializeLanguages();
 
