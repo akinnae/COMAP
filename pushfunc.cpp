@@ -16,7 +16,7 @@ void countryList::pushint(string ogname, int pushval, string lang){
   while (p!=NULL){
     name = p->curCountry.getName();
     if(ogname!=name)
-        p->pushres = (pushval * delta(ogname, name, lang)); //pushres needs to be defined in country class
+        p->pushres = (pushval * delta(ogname, name)); //pushres needs to be defined in country class. Also, LANG SHOULD BE A FACTOR HERE SOMEHOW
     p = p->next;
   }
 }
@@ -34,6 +34,17 @@ void country::pushfrom(){
   }
 }
  
+//DELTA FUNCTION: Carly's function based on proximity & such
+int delta(string initname, string finname){
+	int deltaval=0;
+	for(int i=0; i<=CountriesSIZE; i++){
+		if (initname==Countries[i].initname && finname==Countries[i].finname){
+			deltaval=(Countries[i].prox*Countries[i].migrR);
+			return deltaval;
+		}
+	}
+}
+	
 //ASSUMPTIONS
-//langA is the most freq. spoken lang. PlangA is the percent people who speak it
-//
+//we need an array of countries&proximities, here called Countries[], with max size [CountriesSIZE]
+//this array should be made of objects which have string country names (for initial and final), their proximity in km, and their migration rate or whatever
