@@ -66,6 +66,8 @@ class countryList{
 
   void initializeFromFile();
 
+  void setCountryLang(char* countryName, int langName, double newLangPercent);
+
 };
 
 #endif

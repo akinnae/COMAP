@@ -41,7 +41,7 @@ void country::initializeCountry(long int newPopulation, long int newArea, double
   //cout << urbanPercent << endl;
 }
 
-void country::printInfo()
+void country::printInfo(char** languageNames)
 {
 
   cout << "Name: " << name << endl;
@@ -50,7 +50,12 @@ void country::printInfo()
   cout << "Migration Rate: " << migrationR << endl;
   cout << "Growth Rate: " << growthR << endl;
   cout << "Percentage urban: " << urbanPercent << endl;
-
+  cout << "Language array: " << endl;
+  for(int i = 0; i < 100; i++)
+    {
+      if(spokenLanguages[i] != 0.)
+	cout <<languageNames[i] << ": " << spokenLanguages[i] <<"%" <<  endl;
+    }
 }
 
 void country::age(int years){
@@ -62,7 +67,18 @@ void country::age(int years){
 }
 
 
-void country::initializeLanguages(double* newSpokenLanguages)
+void country::initializeLanguages(int langName, double newLangPercent)
 {
-  spokenLanguages = newSpokenLanguages;
+  // cout << langName << " " << newLangPercent << endl;
+  
+  spokenLanguages[langName] = newLangPercent;
+  //cout << spokenLanguages[langName] << endl;
+  //printInfo();
+}
+
+country::country(){
+  for(int i = 0; i < 100; i++)
+    {
+      spokenLanguages[i] = 0.0;
+    }
 }

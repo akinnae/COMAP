@@ -104,7 +104,7 @@ void countryList::printNode(char* targetNodeName)
       //If we had the right name, print the info
       if(isFound == 1)
 	{
-	  p->curCountry.printInfo();
+	  p->curCountry.printInfo(languageNames);
 	  break;
 	}
       //Otherwise, keep searching
@@ -266,7 +266,9 @@ void countryList::initializeLanguages(){
       //Holds the next line of text                        
       char* nextLine = new char[500];
       char* nextLang;
-      char* nextCountry;
+      int* curLangNum;
+      char* nextCountry = new char[50];
+      char* nextNum;
       if(!langData.getline(nextLine, 500))
 	{
 	  int failed = 1;
@@ -293,17 +295,21 @@ void countryList::initializeLanguages(){
       //That way those commans don't mess up our segmentation
       int scanPlace = 0;
       int inQuotes = -1;
-      //This is used to skip the name of each country since we are collecting langauge names
-      int isName = 1;
       int counter = 0;
       //Now we're scanning the line for commas while making sure we're
       //not in a quotation nor at the end
       for(int i=0; i<200; i++)
 	{
-	  //This tracks the current country
-	  nextCountry = new char[50];
 	  //This will hold the next language name we find
-	  nextLang = new char[50];
+	  if(counter%2==1 || counter == 0)
+	    {
+	    nextLang = new char[50];
+	    curLangNum = new int;
+	    }
+	  else
+	    nextNum = new char[50];
+	  if(counter == 0)
+	    nextNum = new char[50];
 	  //Tracks quotations
 	  if(nextLine[i] == '"')
 	    inQuotes = inQuotes*-1;
@@ -317,7 +323,8 @@ void countryList::initializeLanguages(){
 		    {
 		      nextCountry[j] = nextLine[scanPlace+j];
 		    }
-		  cout << "Current country: " << nextCountry << endl;
+		  nextCountry[i-scanPlace]= '\0';
+		  //cout << "Current country: " << nextCountry << endl;
 		  counter++;
 		  scanPlace = i+1;
 		}
@@ -344,6 +351,7 @@ void countryList::initializeLanguages(){
 			else if(k == i-scanPlace-1)
 			  {
 			  isNew = 0;
+			  *curLangNum = j;
 			  }
 			}
 		    }
@@ -355,6 +363,7 @@ void countryList::initializeLanguages(){
 	      //If it stayed new, add it to the end of the language file
 		  if(isNew == 1)
 		  {
+		    *curLangNum = languageCount;
 		    for(int k = 0; k < i-scanPlace; k++)
 		      {
 			languageNames[languageCount][k] = nextLang[k];
@@ -363,13 +372,29 @@ void countryList::initializeLanguages(){
 		    languageCount++;
 		    //Terminate our string with the appropriate symbol                     
 		    languageNames[languageCount-1][i-scanPlace] = '\0';
-		    cout << languageNames[languageCount-1] << endl;
+		    //cout << languageNames[languageCount-1] << endl;
 		  }
 		//Add to our line place counter
 		counter++;
 		//advance our scan counter
 		scanPlace = i+1;
 		}
+	      //Here we read the number part of the rows
+	      else if (inQuotes == -1 && counter%2==0){           
+		  for(int j = 0; j < i-scanPlace; j++)
+		    {
+		      nextNum[j]= nextLine[scanPlace+j];
+		    }
+		  if(nextNum[0])
+		    {
+		      //cout << nextCountry << endl;
+		      //cout << *curLangNum << endl;
+		      //cout << stof(nextNum) << endl;
+		      setCountryLang(nextCountry,*curLangNum, stof(nextNum));
+		    }
+		  scanPlace = i+1;
+		  counter++;
+	      }
 	      else if(inQuotes == -1)
 		{
 		  scanPlace = i+1;
@@ -379,14 +404,44 @@ void countryList::initializeLanguages(){
 	    //Terminates if we're at the end of the line                                                       
 	    if(nextLine[i] == '\0')
 	      break;
-	    
-	    delete[] nextLang;
+	    //Note this is after the counter has been added to
+	    if(counter%2==1)
+	      {
+	      delete[] nextLang;
+
+	      delete curLangNum;
+
+	      }
+	    else
+	      {
+	      delete[] nextNum;
+
+	      }
 	}
 	//Then frees up those variable pointers for the next set of variables
 	delete[] nextLine;
+
 	delete[] nextCountry;
-      }
+
+    }
   // cout << langData.rdstate() << endl;;
       langData.close();
     }
   
+
+void countryList::setCountryLang(char* countryName, int langName, double newLangPercent){
+
+  nodeptr p = start;
+
+  //First searches for the country by name.
+  while(p != NULL)
+    {
+      if(!strcmp(p->curCountry.getName(), countryName))
+	{
+	  //cout << "Found country." << endl;
+	  p->curCountry.initializeLanguages(langName, newLangPercent);
+	  break;
+	}
+      p = p->next;
+    }
+}

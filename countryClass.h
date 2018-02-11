@@ -16,14 +16,18 @@ class country{
   double growthR;
   double urbanPercent;
 
-  double* spokenLanguages;
+  double spokenLanguages[100];
+
 
  public:
 
   //List of functions which are more clearly explained in the cpp file. Mostly straightforward, though.
+
+  country();
+
   void initializeCountry(long int newPopulation,long int newArea, double newMigrationR, double newGrowthR, double newUrbanPercent);
 
-  void initializeLanguages(double* newSpokenLanguages);
+  void initializeLanguages(int langName, double newLangPercent);
 
   char* getName();
 
@@ -33,7 +37,8 @@ class country{
 
   void age(int years);
 
-  void printInfo();
+  void printInfo(char** languageNames);
 };
+
 
 #endif
