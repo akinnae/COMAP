@@ -8,7 +8,7 @@ using namespace std;
 //defines the country class. Here is where the independent variables for countries are stored. This may eventually become an array of variables (or one for double and one for ints)
 class country{
 
-  char* name;
+  string name;
   double migrationR;
   int population;
   int area;
@@ -24,7 +24,7 @@ class country{
 
   void initializeLanguages(double* newSpokenLanguages);
 
-  char* getName();
+  string getName();
 
   void setName(char* newName);
 
