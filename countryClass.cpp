@@ -52,3 +52,17 @@ void country::printInfo()
   cout << "Percentage urban: " << urbanPercent << endl;
 
 }
+
+void country::age(int years){
+  for(int i = 0; i < years; i++)
+    {
+  population = population+(population*growthR)+(population*migrationR*.01);
+  urbanPercent = urbanPercent+(.02*urbanPercent);
+    }
+}
+
+
+void country::initializeLangauges(double* newSpokenLanguages)
+{
+  spokenLanguages = newSpokenLanguages;
+}

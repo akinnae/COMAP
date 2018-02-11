@@ -218,6 +218,80 @@ void countryList::initializeFromFile(){
         delete[] countryVars;
         delete[] nextLine;
     }
-  
+  data.close();
 }
 
+
+void countryList::ageNodes(int years){
+
+  nodeptr p = start;
+  
+  while(p != NULL)
+    {
+      p->curCountry.age(years);
+      p = p-> next;
+    }
+}
+
+void countryList::initializeLanguages(){
+ //First we open up our file                                                   
+  ifstream data;
+  
+  data.open("languages.csv");
+  
+  //Will hold the language names in a char array                            
+  languageNames = new char*[300];
+  for(int i = 0; i < 300; i++){
+    languageNames[i] = new char*[50];
+  }
+  int LanguageCount = 0;
+  //While we have more data in the file, grab data line-by-line                 
+  while(!data.eof())
+    {
+      //Holds the next line of text                        
+      char* nextLine = new char[500];
+      char* nextLang = new char[60];
+      data.getline(nextLine, 500);
+      //These are used to segment the lines by commas    
+      //"inquotes" counts quotations used around names containing commas    
+      //That way those commans don't mess up our segmentation
+      int scanPlace = 0;
+      int inQuotes = -1;
+      //This is used to skip the name of each country since we are collecting langauge names
+      int isName = 1;
+      int counter = 0;
+      //Now we're scanning the line for commas while making sure we're
+      //not in a quotation nor at the end
+      for(int i=0; i<200; i++){
+	if(nextLine[i] == '"')
+	  inQuotes = inQuotes*-1;
+	if(nextLine[i] == ',' || nextLine[i] == '\0'){
+	  if(inQuotes == -1 && isName!= 1 && counter%2=1){
+	    //If we're not in quotes, grab the segment for our next variable                                                                                                         
+	    for(int j = 0; j < i-scanPlace; j++)
+	      {
+		langNames[(counter/2)+1][j]= nextLine[scanPlace+j];
+	      }
+
+	    counter++;
+	    //Terminate our string with the appropriate symbol                                                                                                                       
+	    languageNames[LanguageCount][i-scanPlace] = '\0';
+	    //advance our scan counter
+	    scanPlace = i+1;
+	  }
+	  else if(inQuotes != -1){
+	    scanPlace = i+1;
+	    isName = 0;
+	  }
+	}
+	//Terminates if we're at the end of the line                                                       
+	if(nextLine[i] == '\0')
+	  break;
+      }
+      //Adds the array of language names to our countries
+      
+      //Then frees up those variable pointers for the next set of variables
+        delete[] nextLine;
+    }
+
+}

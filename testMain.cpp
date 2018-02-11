@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <limits>
 
 #include "countryList.h"
 #include "countryClass.h"
@@ -17,12 +18,11 @@ int main(){
   countryList testList;
   //Then we initialize it to our data set
   testList.initializeFromFile();
-
   int choice = 0;
-  while(choice != 3){
+  while(choice != 4){
+    choice = 4;
     //Clears the inputs after messing around with getline
-    cin.sync();
-    cout << "1\tlist all countries\n2\tdetails on a particular country\n3\tquit" << endl;
+    cout << "Press 1\tto see a list of all countries\nPress 2\tfor details on a particular country\nPress 3\tto age one year\nPress 4\tto quit" << endl;
     cin >> choice;
     if(choice == 1)
       //Then we list those nodes
@@ -34,6 +34,16 @@ int main(){
       testList.printNode(chosenCountry);
       delete[] chosenCountry;
     }
+    if(choice == 3)
+      {
+	int years = 1;
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	cout << "How many years?\n";
+	cin >> years;
+	testList.ageNodes(years);
+      }
+
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     cout << "\n\n\n";
   }
 }

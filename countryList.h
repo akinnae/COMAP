@@ -14,6 +14,8 @@ class countryList{
 
  private:
 
+  char** languageNames;
+
   //Here the structure for the actual linked list is defined. Contains one country and a pointer to the successive country.
   struct node
   {
@@ -24,9 +26,9 @@ class countryList{
   //Defined for convenience
   typedef node* nodeptr;
   
-  //Not sure what this does; initializes to null
+  //nitializes to null
   nodeptr start;
-  
+
  public:
 
   countryList()
@@ -54,9 +56,13 @@ class countryList{
 
   void listNodes();
 
+  void ageNodes(int years);
+  
   void printNode(char* targetNodeName);
   
   void initialize(char* newName, char* newArea, char*newPop, char* newMigR, char*newPopGrowth, char*newUrbanPerc);
+
+  void initializeLanguages();
 
   void initializeFromFile();
 
