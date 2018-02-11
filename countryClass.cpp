@@ -6,18 +6,19 @@
  */
 #include <iostream>
 #include <fstream>
+#include <string>
 #include "countryClass.h"
 
 using namespace std;
 
 //Used in the declaring of countries
-void country::setName(char* newName)
+void country::setName(string newName)
 {
   name = newName;
 }
 
 //Simply returns the name
-char* country::getName()
+string country::getName()
 {
   return name;
 }
