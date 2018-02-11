@@ -8,6 +8,18 @@
 	- double growthR
 	- double percent //something about percent of a pop. speaking a given lang
 */
+//PUSH INIT FUNCTION: calculates init global pushval for a country
+void country::pushfrom(){
+  int pushvalinit;
+  int pushval[];
+  pushvalinit = .25*(migrationR + population + growthR);
+  for(int i=0; i<LANGarrSIZE; i++){
+	  if(langarr[i]!=0){
+		pushval[i]=pushvalinit + (.25*Plangarr[i]);
+		void countryList::pushint(name, pushval[i], langarr[i]);
+	  }
+  }
+}
 
 //PUSH INTERMEDIATE FUNCTION: goes thru & pushes all other countries by a value
 void countryList::pushint(string ogname, int pushval, string lang){ 
@@ -18,19 +30,6 @@ void countryList::pushint(string ogname, int pushval, string lang){
     if(ogname!=name)
         p->pushres = (pushval * delta(ogname, name)); //pushres needs to be defined in country class. Also, LANG SHOULD BE A FACTOR HERE SOMEHOW
     p = p->next;
-  }
-}
-
-//PUSH INIT FUNCTION: calculates init global pushval for a country
-void country::pushfrom(){
-  int pushvalinit;
-  int pushval[];
-  pushvalinit = .25*(migrationR + population + growthR);
-  for(int i=0; i<LANGarrSIZE; i++){
-	  if(langarr[i]!=0){
-		pushval[i]=pushvalinit + (.25*Plangarr[i]);
-		void countryList::push(name, pushval[i], langarr[i]);
-	  }
   }
 }
  
