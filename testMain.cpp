@@ -2,6 +2,7 @@
 //We should be able to make a list of countries, retrieve their names, and delete countries by name
 
 #include <iostream>
+#include <string>
 #include <fstream>
 #include <limits>
 
@@ -31,10 +32,10 @@ int main(){
       testList.listNodes();
     if(choice == 2){
       cout << "Type the name of the country:\n";
-      char* chosenCountry = new char[50];
+      string chosenCountry = new string;
       cin >> chosenCountry;
       testList.printNode(chosenCountry);
-      delete[] chosenCountry;
+      delete chosenCountry;
     }
     if(choice == 3)
       {
