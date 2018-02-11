@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ using namespace std;
 
 
 //Function for adding nodes. Takes a name for the new country
-void countryList::addNode(char* newName)
+void countryList::addNode(string newName)
 {
   nodeptr n, curr, prev;
 
@@ -40,7 +41,7 @@ void countryList::addNode(char* newName)
 }
 
 //This function is for node deletion
-void countryList::deleteNode(char* name)
+void countryList::deleteNode(string name)
 {
   nodeptr prev, curr;
   
@@ -78,30 +79,14 @@ void countryList::listNodes()
 
 
 //Prints the node by the given name (maybe make it print info as well?)
-void countryList::printNode(char* targetNodeName)
+void countryList::printNode(string targetNodeName)
 {
   nodeptr p = start;
   int curNode = 0;
   //Searches until the end or a matching node number
-  while (p != NULL)
-    {
-      //Search algorithm compares character by character
-      //Defaults to "found"
-      int isFound = 1;
-      for(int i = 0; i< 50; i++){
-	isFound = 1;
-	//If the name ends before we find a discrepancy, use it
-	if(p->curCountry.getName()[i] == '\0' || targetNodeName[i] == '\0')
-	  break;
-	//If we find a discrepancy, we don't have the right name
-	isFound = 0;
-	if(p->curCountry.getName()[i] != targetNodeName[i])
-	  {
-	    break;
-	  }
-      }
+  while (p != NULL){
       //If we had the right name, print the info
-      if(isFound == 1){
+      if(p->curCountry.getName==targetNodeName){
 	p->curCountry.printInfo();
 	break;
       }
@@ -115,10 +100,10 @@ void countryList::printNode(char* targetNodeName)
 
 //This is the infamous initialization function. Information comes via character arrays sent from initialization.cpp. Here they are converted into int's or doubles, accounting for blanks, then passed on to the respective country
 //Note: this passes data into countries which have already been created by name.
-void countryList::initialize(char* newName, char* newArea, char* newPop, char* newMigR, char* newPopGrowth, char* newUrbanPerc)
+void countryList::initialize(string newName, char* newArea, char* newPop, char* newMigR, char* newPopGrowth, char* newUrbanPerc)
 {
   nodeptr p = start;
-
+//NOT SURE ABOUT STRING/CHAR STUFF IN THIS INIT FUNCTION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   //First searches for the country by name.
   while(p != NULL)
     {
@@ -162,6 +147,7 @@ void countryList::initialize(char* newName, char* newArea, char* newPop, char* n
     }
 }
 
+//I DIDN'T EVEN MESS WITH THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 void countryList::initializeFromFile(){
   //First we open up our file                                                   
   ifstream data;
@@ -242,7 +228,7 @@ void countryList::initializeLanguages(){
     cout << "File opened" << endl;
   else
     {
-      cout << "THis boy broke" << endl;
+      cout << "This boy broke" << endl;
       return;
     }
   //Will hold the language names in a char array                            
