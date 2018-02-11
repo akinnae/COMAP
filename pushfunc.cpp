@@ -16,7 +16,7 @@ void countryList::pushint(string ogname, int pushval, string lang){
   while (p!=NULL){
     name = p->curCountry.getName();
     if(ogname!=name)
-        pushres = (pushval * delta(ogname, name)); //pushres needs to be defined in country class
+        p->pushres = (pushval * delta(ogname, name)); //pushres needs to be defined in country class
     p = p->next;
   }
 }
